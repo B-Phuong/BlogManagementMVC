@@ -1,0 +1,163 @@
+﻿@using BlogManagement_MVC.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model IEnumerable<PostCommentVM>
+@inject IPostCommentRepository context
+@{
+    Layout = null;
+    var imageURL = "";
+}
+
+<div class="comment-section">
+    <div class="grids_of_2">
+        <h2 style="color:#44d7b6">Comments</h2>
+        @foreach (var item in Model)
+        {
+            foreach (var commentList in @ViewBag.AuthorCommentList)
+            {
+                if (commentList.Id == @item.AuthorCommentId)
+                {
+                    imageURL = commentList.ImageURL;
+                }
+            }
+            if (@item.ParentID == null)  // get comment
+            {
+                <div class="grid1_of_2">
+                    <div class="grid_img">
+                        <a href=""><img src="~/images/@imageURL" width="60px" alt=""></a>
+                    </div>
+                    <div class="grid_text">
+                        <h4 class="style1 list"><a href="#">@item.AuthorComment.FirstName @item.AuthorComment.LastName</a></h4>
+                        <h3 class="style">@item.CreatedAt</h3>
+                        <p class="para top">
+                            @item.Content
+                           @* @if (User.IsInRole("Admin"))
+                            {
+                                @* <i class="" controler="PostComment" action="HiddenComment"></i>
+                              
+                                <a data-id="@item.Id" data-toggle="modal" data-target="#hiddenCommentModal" class="open-AddDialog btn fa fa-check text-success text-active" asp-route-id="@item.Id">
+                                    <i aria-hidden="true"></i>
+                                </a>
+                            }*@
+                        </p>
+
+                        <a aria-expanded="false" data-toggle="collapse" class="btn1" href="@($"#replyComment{item.Id}")">Click to Reply</a>
+                    </div>
+
+                    @if (SignInManager.IsSignedIn(User)) @*User.Identity.IsAuthenticated-*@
+                    {
+                        <div class="table-form">
+                            <div class="grid1_of_2 left">
+                                <form class="collapse" method="post" asp-controller="PostComment" asp-action="Create" id="@($"replyComment{item.Id}")">
+
+                                    <div>
+
+                                        <label>Title Comment</label>
+                                        <span><input name="Title" /></span>
+                                        <label>Your Comment<span>*</span></label>
+                                        <input name="ParentID" value="@item.Id" readonly hidden />
+                                        <input name="PostId" value="@ViewBag.PostId" readonly hidden />
+                                        <textarea name="Content"> </textarea>
+                                    </div>
+                                    <input type="submit" value="submit">
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    <div class="clear"></div>
+                </div>
+                @foreach (var subComment in Model)
+                {
+                    foreach (var commentList in @ViewBag.AuthorCommentList)
+                    {
+                        if (commentList.Id == @subComment.AuthorCommentId)
+                        {
+                            imageURL = commentList.ImageURL;
+                        }
+                    }
+                    @if (subComment.ParentID == item.Id)  //get subcomment
+                    {
+                        <div class="grid1_of_2 left">
+                            <div class="grid_img">
+                                <a href=""><img src="~/images/@imageURL" width="60px" alt=""></a>
+                            </div>
+                            <div class="grid_text">
+                                <h4 class="style1 list"><a href="#">@subComment.AuthorComment.FirstName @subComment.AuthorComment.LastName</a></h4>
+                                <h3 class="style">@subComment.CreatedAt</h3>
+                                <p class="para top">
+                                    @subComment.Content
+                                   @* @if (User.IsInRole("Admin"))
+                                    {
+                                        <i data-id="@item.Id" class="fa fa-check text-success text-active" controler="PostComment" action="HiddenComment"></i>
+                                    }*@
+                                </p>
+
+                                <a aria-expanded="false" data-toggle="collapse" class="btn1" href="@($"#replySubComment{subComment.Id}")">Click to Reply</a>
+                            </div>
+
+                            @if (SignInManager.IsSignedIn(User)) @*User.Identity.IsAuthenticated-*@
+                            {
+                                <div class="table-form">
+                                    <div class="grid1_of_2 left">
+                                        <form class="collapse" method="post" asp-controller="PostComment" asp-action="Create" id="@($"replySubComment{subComment.Id}")">
+
+                                            <div>
+                                                <label>Title Comment</label>
+                                                <span><input name="Title" /></span>
+                                                <label>Your Comment<span>*</span></label>
+                                                <input name="ParentID" value="@item.Id" readonly hidden /> @*  @subComment.Id--> *@ 
+                                                <input name="PostId" value="@ViewBag.PostId" readonly hidden />
+                                                <textarea name="Content"> </textarea>
+                                            </div>
+                                            <input type="submit" value="submit">
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                            <div class="clear"></div>
+                        </div>
+                    }
+                }
+            }
+
+        }
+       
+        <div class="artical-commentbox">
+            <h2>Leave a Comment</h2>
+            <div class="table-form">
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <form asp-action="Create">
+
+                        <div>
+                            <label>Title Comment</label>
+                            <span><input name="Title" /></span>
+                            <label>Your Comment<span>*</span></label>
+                            <input name="ParentID" value="@null" readonly hidden />
+                            <input name="PostId" value="@ViewBag.PostId" readonly hidden />
+                            <textarea name="Content"> </textarea>
+                        </div>
+                        <input type="submit" value="submit">
+                    </form>
+                }
+                else
+                {
+                      <a class="reply-btn btn" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Post/Details/@ViewBag.PostId">Login to reply</a>
+@*
+                    <div>
+                        <label>Please log in before comment in this post</label>
+
+                    </div>*@
+                }
+
+            </div>
+            <div class="clear"> </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Button trigger modal -->

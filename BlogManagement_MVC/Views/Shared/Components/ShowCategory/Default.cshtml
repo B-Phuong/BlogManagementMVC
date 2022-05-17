@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CategoryVM>
+<section class="hiro-section" id="services">
+    <div class="container">
+        <div class="service-section">
+            <h2 class="section-title career-section-title">Category</h2>
+            <div class="row">
+
+                @foreach (var item in Model)
+                {
+                    <!--col-md-4 mb-4 mb-md-0-->
+                    <div class="col-md wow fadeInUp">
+                        @if (@item.ParentID == null)
+                        {
+                            <h6 class="service-category-title">@item.Title</h6>
+                            <ul class="service-list list-group list-group-flush">
+                            @foreach (var subItem in Model)
+                            {
+                                @if (@subItem.ParentID == @item.Id)
+                                {                                  
+                                        <a asp-controller="PostCategory" asp-action="PostsByCategory" asp-route-id="@subItem.Id" class="link-hover-fx">
+                                        <li class="list-group-item" aria-hidden="true">@subItem.Title</li>
+                                        </a>                                  
+                                    @*  <li class="list-group-item">@subItem.Title</li>*@
+
+                                }
+
+                            }
+                            </ul>
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+

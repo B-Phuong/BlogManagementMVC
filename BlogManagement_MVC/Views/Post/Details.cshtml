@@ -1,0 +1,137 @@
+﻿@using BlogManagement_MVC.Data
+@using Microsoft.AspNetCore.Identity
+@using System.Web
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model PostVM
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+@*<!DOCTYPE HTML>*@
+<html>
+<head>
+
+   
+    <link href="~/css/style2.css" rel='stylesheet' type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="~/images/fav-icon.png" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    </script>
+    <!----webfonts---->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!----//webfonts---->
+    <!---start-click-drop-down-menu----->
+    <script src="~/js/jquery.min.js"></script>
+    <!----start-dropdown--->
+    <script type="text/javascript">
+        var $ = jQuery.noConflict();
+            $(function() {
+                $('#activator').click(function(){
+                    $('#box').animate({'top':'0px'},500);
+                });
+                $('#boxclose').click(function(){
+                $('#box').animate({'top':'-700px'},500);
+                });
+            });
+            $(document).ready(function(){
+            //Hide (Collapse) the toggle containers on load
+            $(".toggle_container").hide();
+            //Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+            $(".trigger").click(function(){
+                $(this).toggleClass("active").next().slideToggle("slow");
+                    return false; //Prevent the browser jump to the link anchor
+            });
+
+        });
+    </script>
+    <!----//End-dropdown--->
+</head>
+@*<body>*@
+<!---start-wrap---->
+<!---start-header---->
+<div class="header">
+    <div class="wrap">
+        <div class="logo">
+        </div>
+
+        @*    <div class="top-searchbar">
+            <form>
+            <input type="text" /><input type="submit" value="" />
+            </form>
+            </div>*@
+
+        <div class="clear"> </div>
+    </div>
+</div>
+<!---//End-header---->
+<!---start-content---->
+<div class="top-searchbar">
+    <form>
+        <input type="text" /><input type="submit" value="" />
+    </form>
+</div>
+<div class="content">
+    <!--class="content"-->
+    <div class="wrap">
+        <!--class="wrap"-->
+        <div class="single-page">
+            <!--class="single-page"-->
+            <div>
+                <!--class="single-page-artical"-->
+                <div>
+                    <!--class="artical-content"-->
+                    <h1><b>@Model.Title</b></h1>
+                    <img src="~/images/@Model.ImageURL" title="banner1">
+                    
+                    <p>@Html.Raw(@Model.Content)</p>  <!--System.Web.HttpUtility.HtmlDecode(Model.Content)-->
+                    <div class="artical-links">
+                        <ul>
+                            <li><img src="~/images/blog-icon2.png" title="Admin"><span>@Model.Author.FirstName @Model.Author.LastName</span></li>
+                            <li><img src="~/images/blog-icon3.png" title="Comments"><span>@ViewBag.CountComment comments</span></li>
+                            <li><img src="~/images/blog-icon4.png" title="Lables"><span>View posts</span></li>
+                        </ul>
+                    </div>
+                    <div class="share-artical">
+                        <ul>
+                            <li><a href="#"><img src="~/images/facebooks.png" title="facebook">Facebook</a></li>
+                            <li><a href="#"><img src="~/images/twiter.png" title="Twitter">Twiiter</a></li>
+                            <li><a href="#"><img src="~/images/rss.png" title="rss">Rss</a></li>
+                        </ul>
+                    </div>
+                    <div class="clear"> </div>
+                </div>
+                <div><h3>Created At: @Model.CreatedAt<h3></div>
+                    @if(User.IsInRole("Admin"))
+                {
+                      <div id="commentsSectionAdminRole"></div>
+                }
+                else
+                {
+                    <div id="commentsSection"></div>
+                }
+            </div>
+        </div>
+    </div>
+    <!----start-footer--->
+    <div class="footer">
+        <p>Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+    </div>
+    <!----//End-footer--->
+    <!---//End-wrap---->
+    @*</body>*@
+</html>
+<script>
+
+    $.get('@Url.Action("FindByPost", "PostComment")', {id : @Model.Id}, function(content){
+            $("#commentsSection").html(content);
+        });
+</script>
+<script>
+
+    $.get('@Url.Action("FindAll", "PostComment")', {id : @Model.Id}, function(content){
+            $("#commentsSectionAdminRole").html(content);
+        });
+</script>

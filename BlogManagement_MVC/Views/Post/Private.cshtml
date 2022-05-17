@@ -1,0 +1,27 @@
+﻿@model PostVM
+
+<div class="container">
+    <h3>Are you sure you want to private this post?</h3>
+    <div>
+
+        <hr />
+        <div>
+            <h6>@Html.DisplayNameFor(model => model.Title)</h6>
+            @Model.Title
+        </div>
+        <div>
+            <h6>@Html.DisplayNameFor(model => model.Summary)</h6>
+            @Model.Summary
+        </div>
+        <div>
+            <h6>@Html.DisplayNameFor(model => model.CreatedAt)</h6>
+            @Model.CreatedAt
+        </div>
+
+        <form asp-action="Private">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
+</div>

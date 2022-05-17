@@ -1,0 +1,60 @@
+﻿@using BlogManagement_MVC.Data
+
+@model IEnumerable<PostVM>
+
+@await Component.InvokeAsync("ShowCategory");
+
+
+<main class="blog-page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 blog-post-archive">
+                 <h4 style="color:aquamarine">All posts</h4>
+                @foreach (var item in Model)
+                {
+                    <article class="media blog-post wow fadeInUp">
+                        <img src="~/images/@item.ImageURL" alt="blog post" class="blog-post-thumbnail">
+                        <div class="media-body">
+                            <h5 class="blog-post-title">@item.Title</h5>
+                            <p class="blog-post-excerpt">@item.Summary</p>
+                            <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Id" class="blog-post-link">Read more</a>
+                        </div>
+                    </article>
+
+                }
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" class="mu-blog-pagination">
+            <ul class="pagination">
+                @if (ViewBag.CurrentPage != 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@ViewBag.ReturnUrl/@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+                            <span aria-hidden="true" class="fa fa-long-arrow-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                {
+                    <li class="page-item"><a class="page-link" href="@ViewBag.ReturnUrl/@(i)">@i</a></li>
+                }
+
+                @if (ViewBag.CurrentPage != ViewBag.TotalPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@ViewBag.ReturnUrl/@(ViewBag.CurrentPage + 1)" aria-label="Next">
+                            <span aria-hidden="true" class="fa fa-long-arrow-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+
+
+</main>
+
+
+

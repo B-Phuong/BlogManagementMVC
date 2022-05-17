@@ -1,0 +1,33 @@
+﻿@using BlogManagement_MVC.Data
+
+@model IEnumerable<PostCategory>
+
+
+@await Component.InvokeAsync("ShowCategory");
+
+<main class="blog-page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 blog-post-archive">                
+                    @foreach (var item in Model)
+                    {
+                        <article class="media blog-post wow fadeInUp">
+                            <img src="~/images/blog_1.jpg" alt="blog post" class="blog-post-thumbnail">
+                            <div class="media-body">
+                                <h5 class="blog-post-title">@item.Post.Title</h5>
+                                <p class="blog-post-excerpt">@item.Post.Summary</p>
+                                <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Post.Id" class="blog-post-link">Read more</a>
+                            </div>
+                        </article>
+
+                    }            
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="~/vendors/wowjs/wow.min.js"></script>
+<script src="~/vendors/popper.js/popper.min.js"></script>
+<script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/js/main.js"></script>

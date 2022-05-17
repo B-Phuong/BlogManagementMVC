@@ -1,0 +1,73 @@
+﻿@model IEnumerable<UserInfoVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutAdmin";
+}
+
+<h2>List Blogger</h2>
+
+<table id="dtTable1" class="table">
+    <thead>
+        <tr>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.RegisteredAt)
+            </th>
+            <th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.MiddleName)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.RegisteredAt)
+                </td>
+               @* <td>
+                      <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+<script>
+    $(document).ready(function() {
+        $('#dtTable1').DataTable();
+    });
+</script>
+
+}

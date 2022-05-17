@@ -1,0 +1,74 @@
+﻿@model IEnumerable<BlogManagement_MVC.Models.CategoryVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>List Sub Category</h2>
+
+@*<p>
+    <a asp-action="Create" asp-action="Category" >Create New</a>
+    </p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.CategoryParent)
+            </th>
+
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.MetaTitle)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th style="color:black">
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.CategoryParent.Title)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.MetaTitle)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.Slug)
+                </td>
+                <td style="color:black">
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+
+                <td>
+
+
+                    <a class="btn btn-warning" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt">Edit</i></a>
+                   @* <a class="btn btn-info" asp-controller="Category" asp-action="Details" asp-controller="Post" asp-route-id="@item.Id">Detail</a>
+                    <button data-id="@item.Id" asp-controller="Category" asp-action="Delete" class="btn btn-danger deleteBtn" type="button"> <i class="far fa-trash-alt">Delete</button>*@
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable();
+        } );
+    </script>
+}

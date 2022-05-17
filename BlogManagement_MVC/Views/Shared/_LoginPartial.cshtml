@@ -1,0 +1,44 @@
+﻿@using BlogManagement_MVC.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject ApplicationDbContext context
+
+<ul class="navbar-nav">
+    @{
+        var imageURL = context.Users.Where(u => u.Id == UserManager.GetUserId(User)).Select(u => u.ImageURL).FirstOrDefault();
+        var userName = context.Users.Where(u => u.Id == UserManager.GetUserId(User)).Select(u => u.UserName).FirstOrDefault();
+    }
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img width="40px" height="40px" src="~/images/@imageURL" title="user-name" />
+                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                            @userName
+                        </a>
+                    </a>
+                </li>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "PostCategory", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+
+            </ul>
+        </li>
+        @*     <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+            </li>*@
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+        @*  <li class="nav-item">
+
+            </li>*@
+    }
+</ul>

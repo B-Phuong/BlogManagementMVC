@@ -1,0 +1,15 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+    Layout = null;
+}
+<partial name="_HeaderPartial" />
+<div class="col-md-4">
+    <section>
+        <h1>@ViewData["Title"]</h1>
+        <p>@Model.StatusMessage</p>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </section>
+</div>
+

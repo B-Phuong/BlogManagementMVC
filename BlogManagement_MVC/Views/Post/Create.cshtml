@@ -1,0 +1,137 @@
+﻿@model PostVM
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+<div class="container">
+    <h2>Create your blog</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Category</label>
+                    <select id="selectItem" name="listCategory" class="form-control" asp-items="ViewBag.list" multiple>
+                    </select>
+
+                    @* <span asp-validation-for="Title" class="text-danger"></span>  new SelectList*@
+                </div>
+                <br></br>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control"></input>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Summary" class="control-label"></label>
+                    <textarea asp-for="Summary" class="form-control"></textarea>
+                    <span asp-validation-for="Summary" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                @*   <div class="form-group">
+                    <label asp-for="Files" class="control-label"></label>
+                    <input type="file" multiple="multiple" asp-for="Files" class="form-control" />
+                    <span asp-validation-for="Files" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <label asp-for="ImageFile"></label>
+                    <input asp-for="ImageFile" class="form-control" onchange="ShowImg(this, document.getElementById('previewImg'))" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+
+                    <img src="" id="previewImg" alt="Ảnh đại diện" style="width:300px;height:200px;">
+                </div>
+
+
+                <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+@*
+                <div class="form-group">
+                    <input type="submit" value="Send" class="btn btn-primary" />
+                </div>*@
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Content').summernote({
+            height: 250
+        });
+        //$('#Title').select2({
+        //    tags:true
+        //});
+        $('#Summary').select2({
+            tags: true
+        });
+    });
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
+<script>
+      $(document).ready(function() {
+          $('#Content').summernote({
+              height: 200,
+              toolbar: [
+                  // [groupName, [list of button]]
+                  ['style', ['bold', 'italic', 'underline', 'clear']],
+                  ['font', ['strikethrough', 'superscript', 'subscript']],
+                  ['fontsize', ['fontsize']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['height', ['height']]
+                  ];
+                  popover: {
+    image: [
+      ['image', ['resizeHalf', 'resizeQuarter', 'resizeNone']],
+      ['float', ['floatLeft', 'floatRight', 'floatNone']],
+      ['remove', ['removeMedia']]
+    ],
+    link: [
+      ['link', ['linkDialogShow', 'unlink']]
+    ],
+    table: [
+      ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+      ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+    ],
+    air: [
+      ['color', ['color']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['para', ['ul', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture']]
+    ]
+          });
+      });
+</script>
+
+
+<script>
+    $(function() {
+      $('#selectItem').multiselect({
+            includeSelectAllOption: true
+      });
+
+    });
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>

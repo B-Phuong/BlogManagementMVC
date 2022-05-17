@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PostVM>
+@{
+    ViewData["Title"] = "GetPostByUserId";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="blog-page-wrapper">
+    <div class="container">
+        <h2>My Blogs</h2>
+        <div class="row">
+            <div class="col-lg-8 blog-post-archive">
+                @foreach (var item in Model)
+                {
+                    <article class="media blog-post wow fadeInUp">
+                        <img src="~/images/@item.ImageURL" alt="blog post" class="blog-post-thumbnail">
+                        <div class="media-body">
+                            <h5 class="blog-post-title">@item.Title</h5>
+                            <p class="blog-post-excerpt">@item.Summary</p>
+                       
+                            <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">
+                                <i aria-hidden="true">Edit</i>
+                            </a>
+                            <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">
+                                <i aria-hidden="true">Detail</i>
+                            </a>
+                            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this record?')">
+                                <i aria-hidden="true">Delete</i>
+                            </a>
+                            @if(@item.Published == 1)
+                            {
+                                 <a asp-action="Private" class="btn btn-danger" asp-route-id="@item.Id">
+                                <i aria-hidden="true">Private</i>
+                                </a>
+                            }
+                            else
+                            {
+                                  <a asp-action="Publish" class="btn btn-info" asp-route-id="@item.Id">
+                                <i aria-hidden="true">Publish</i>
+                                </a>
+                            }
+
+                        </div>
+                    </article>
+
+                }
+            </div>
+        </div>
+    </div>
+</main>
+

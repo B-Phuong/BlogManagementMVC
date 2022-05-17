@@ -1,0 +1,92 @@
+﻿@using BlogManagement_MVC.Data
+@model IEnumerable<PostVM>
+@{
+    Layout = "_LayoutAdmin";
+}
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap.min.css" />*@
+
+
+
+<div class="table-responsive">
+    <table id="dttable" class="table">
+        <thead>
+            <tr>
+                <th style="color:black">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th style="color:black">
+                    @Html.DisplayNameFor(model => model.Author.FirstName)
+                </th>
+                <th style="color:black">
+                    @Html.DisplayNameFor(model => model.Author.MiddleName)
+                </th>
+                <th style="color:black">
+                    @Html.DisplayNameFor(model => model.Author.LastName)
+                </th>
+                <th style="color:black">
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="color:black">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td style="color:black">
+                        @Html.DisplayFor(modelItem => item.Author.FirstName)
+                    </td>
+                    <td style="color:black">
+                        @Html.DisplayFor(modelItem => item.Author.MiddleName)
+                    </td>
+                    <td style="color:black">
+                        @Html.DisplayFor(modelItem => item.Author.LastName)
+                    </td>
+                    <td style="color:black">
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+
+                    <td>
+                        @*   <button data-id="@item.Id" class="btn btn-primary allocateBtn" type="button"> Allocate Levae</button>
+                        *@
+                        @*  <a  class="btn btn-warning"  asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> ||*@
+                        <a class="btn btn-info" asp-action="Details" asp-controller="Post" asp-route-id="@item.Id">Detail</a>
+
+                        @* <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button"> <i class="far fa-trash-alt"></button>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@*@section Scripts{
+<script>
+    $function(){
+        $('#dttable').DataTable();
+    };
+</script>
+    }*@
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $('#dttable').DataTable();
+        } );
+    </script>
+    
+
+}
