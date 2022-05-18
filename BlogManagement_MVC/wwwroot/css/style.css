@@ -10641,7 +10641,7 @@ html {
 }
 
 .hiro-header.home-header {
-    background-image: linear-gradient(to right, #fff 0%, #fff 70%, #000 70%, #000 100%);
+    background-image: linear-gradient(to right, #fff 0%, #fff 70%, #fff 70%, #44d7b6 100%);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -10661,8 +10661,8 @@ html {
 .hiro-nav {
     display: flex;
     justify-content: space-between;
-    padding-top: 27px;
-    padding-bottom: 27px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     position: relative;
     z-index: 1001;
 }
@@ -10712,6 +10712,10 @@ html {
         z-index: 1001;
         transition: all 0.3s ease-in-out;
     }
+}
+
+.logo {
+    padding-top: 25px;
 }
 
 .hiro-nav-popup-modal-open .nav-brand .logo {

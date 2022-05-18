@@ -11,22 +11,27 @@
     }
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <ul>
-                <li>
                     <a href="#">
-                        <img width="40px" height="40px" src="~/images/@imageURL" title="user-name" />
-                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                            @userName
-                        </a>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row">
+                                    <img width="40px" height="40px" src="~/images/@imageURL" title="user-name" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                                        @userName
+                                    </a>
+                                </div>
+                            </div>
+                        </div>    
                     </a>
-                </li>
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "PostCategory", new { area = "" })">
-                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                </form>
-
-            </ul>
-        </li>
+                    <div class="row">
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "PostCategory", new { area = "" })">
+                            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                        </form>
+                    </div>
         @*     <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
             </li>*@
