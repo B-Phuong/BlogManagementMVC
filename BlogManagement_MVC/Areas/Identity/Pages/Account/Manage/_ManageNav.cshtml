@@ -4,14 +4,14 @@
 }
 <ul class="nav nav-pills nav-stacked">
     <div class="col-md-6">
-    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-page="./Index">Profile</a></li>
-    <li class="@ManageNavPages.EmailNavClass(ViewContext)"><a id="email" asp-page="./Email">Email</a></li>
-    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a id="change-password" asp-page="./ChangePassword">Password</a></li>
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-page="./Index" style="color: #44d7b6">Profile</a></li>
+    <li class="@ManageNavPages.EmailNavClass(ViewContext)"><a id="email" asp-page="./Email" style="color: #44d7b6">Email</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a id="change-password" asp-page="./ChangePassword" style="color: #44d7b6">Password</a></li>
     @if (hasExternalLogins)
     {
-        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a id="external-login" asp-page="./ExternalLogins">External logins</a></li>
+        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a id="external-login" asp-page="./ExternalLogins" style="color: #44d7b6">External logins</a></li>
     }
-    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
+    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-page="./TwoFactorAuthentication" style="color: #44d7b6">Two-factor authentication</a></li>
 @*    <li class="@ManageNavPages.PersonalDataNavClass(ViewContext)"><a asp-page="./PersonalData">Personal data</a></li>*@
 </div>
 </ul>
