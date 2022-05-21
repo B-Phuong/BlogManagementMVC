@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 blog-post-archive">
-                 <h4 style="color:aquamarine">All posts</h4>
+                 <h4 style="color: #44d7b6">All posts</h4>
                 @foreach (var item in Model)
                 {
                     <article class="media blog-post wow fadeInUp">
@@ -29,7 +29,7 @@
                 @if (ViewBag.CurrentPage != 1)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="@ViewBag.ReturnUrl/@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+                        <a class="page-link page-color" href="@ViewBag.ReturnUrl/@(ViewBag.CurrentPage - 1)" aria-label="Previous">
                             <span aria-hidden="true" class="fa fa-long-arrow-left"></span>
                             <span class="sr-only">Previous</span>
                         </a>
@@ -37,13 +37,13 @@
                 }
                 @for (int i = 1; i <= ViewBag.TotalPage; i++)
                 {
-                    <li class="page-item"><a class="page-link" href="@ViewBag.ReturnUrl/@(i)">@i</a></li>
+                    <li class="page-item"><a class="page-link page-color" href="@ViewBag.ReturnUrl/@(i)">@i</a></li>
                 }
 
                 @if (ViewBag.CurrentPage != ViewBag.TotalPage)
                 {
                     <li class="page-item">
-                        <a class="page-link" href="@ViewBag.ReturnUrl/@(ViewBag.CurrentPage + 1)" aria-label="Next">
+                        <a class="page-link page-color" href="@ViewBag.ReturnUrl/@(ViewBag.CurrentPage + 1)" aria-label="Next">
                             <span aria-hidden="true" class="fa fa-long-arrow-right"></span>
                             <span class="sr-only">Next</span>
                         </a>

@@ -18,7 +18,7 @@
                                 @if (@subItem.ParentID == @item.Id)
                                 {                                  
                                         <a asp-controller="PostCategory" asp-action="PostsByCategory" asp-route-id="@subItem.Id" class="link-hover-fx">
-                                        <li class="list-group-item" aria-hidden="true">@subItem.Title</li>
+                                        <li class="list-group-item" aria-hidden="true" style="color: #44d7b6">@subItem.Title</li>
                                         </a>                                  
                                     @*  <li class="list-group-item">@subItem.Title</li>*@
 

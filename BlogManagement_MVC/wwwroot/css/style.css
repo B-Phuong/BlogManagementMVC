@@ -4944,13 +4944,16 @@ input[type="button"].btn-block {
     border-radius: 0.25rem;
 }
 
+.page-color {
+    color: #44d7b6;
+}
+
 .page-link {
     position: relative;
     display: block;
     padding: 0.5rem 0.75rem;
     margin-left: -1px;
     line-height: 1.25;
-    color: #007bff;
     background-color: #fff;
     border: 1px solid #dee2e6;
 }
@@ -4983,8 +4986,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #44d7b6;
+    border-color: #44d7b6;
 }
 
 .page-item.disabled .page-link {
@@ -10641,7 +10644,7 @@ html {
 }
 
 .hiro-header.home-header {
-    background-image: linear-gradient(to right, #fff 0%, #fff 70%, #000 70%, #000 100%);
+    background-image: linear-gradient(to right, #fff 0%, #fff 70%, #fff 70%, #44d7b6 100%);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -10661,8 +10664,8 @@ html {
 .hiro-nav {
     display: flex;
     justify-content: space-between;
-    padding-top: 27px;
-    padding-bottom: 27px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     position: relative;
     z-index: 1001;
 }
@@ -10712,6 +10715,10 @@ html {
         z-index: 1001;
         transition: all 0.3s ease-in-out;
     }
+}
+
+.logo {
+    padding-top: 25px;
 }
 
 .hiro-nav-popup-modal-open .nav-brand .logo {
@@ -11567,7 +11574,6 @@ html {
     }
 
 .blog-sidebar .subscribe-form .btn-subscribe {
-    background-color: rgba(0, 145, 255, 0.66);
     color: #ffffff;
     font-weight: 400;
     padding-top: 13px;
