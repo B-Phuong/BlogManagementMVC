@@ -13,11 +13,11 @@
         <div class="carousel-inner" role="listbox">
 
             <div class="row">
-    <div class="col-md-4">
+    <div style="width: 60%; margin: auto; margin-bottom: 10px; background: #e7ebf0; border-radius: 20px; box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px " class="col-md-4">
         <section>
-            <h1>@ViewData["Title"]</h1>
+            <h1 style="text-align: center; margin-bottom: 0px; margin-top: 16px">@ViewData["Title"]</h1>
             <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
+                @*<h4>Use a local account to log in.</h4>*@
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -38,24 +38,34 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                <div style="margin: auto; width: 30%" class="form-group">
+                    <button style="width: 100%; background-color: #44d7b6 " type="submit" class="btn btn-primary">Log in</button>
                 </div>
                 <div class="form-group">
-                    <p>
+                    <p style="margin-bottom: 0px; margin-top: 16px; color: #44d7b6">
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
-                    <p>
+                    <p style="margin-bottom: 0px; color: #44d7b6">
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
                 </div>
+                <div style="display: flex; margin: auto; width: 80%">
+                    <p style="text-align: center; width: 60%; margin: auto 0 auto 0"> Or Log In With </p> 
+                <button style="font-size: 25px; color: #fff; display: -webkit-box; display: -webkit-flex; display: -moz-box; display: -ms-flexbox; display: flex; justify-content: center; align-items: center; width: 50px; height: 50px; border-radius: 50%; margin: 5px; background-color: #ea4335; border: 2px solid #e7e7e7; ">
+                    G
+                </button>
+                </div>
+                
             </form>
         </section>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+    @*<div class="col-md-6 col-md-offset-2">
         <section>
             <h4>Use another service to log in.</h4>
             <hr />
+            <button class="login100-social-item bg3">
+                <i class="fa fa-google"></i>
+            </button>
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
@@ -81,7 +91,7 @@
                 }
             }
         </section>
-    </div>
+    </div>*@
 </div>
 
 
