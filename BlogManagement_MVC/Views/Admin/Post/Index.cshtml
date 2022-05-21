@@ -65,7 +65,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         @*  <a  class="btn btn-warning"  asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> ||*@
                         <a class="btn btn-info" asp-action="Details" asp-controller="Post" asp-route-id="@item.Id">Detail</a>
 
-                        @* <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button"> <i class="far fa-trash-alt"></button>*@
+                        <a class="btn btn-info" asp-action="Delete" asp-controller="Post" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20220404062953_UpdateSchema.cs" />
     <Compile Remove="Data\Migrations\20220404062953_UpdateSchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220519043037_new.cs" />
+    <Compile Remove="Data\Migrations\20220519043037_new.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -241,6 +243,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.23" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Slugify" Version="0.1.0.20570" />
   </ItemGroup>
 
   <ItemGroup>

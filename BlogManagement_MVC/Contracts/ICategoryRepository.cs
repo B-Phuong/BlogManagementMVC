@@ -7,5 +7,6 @@ namespace BlogManagement_MVC.Contracts
     public interface ICategoryRepository : IRepositoryBase<Category>
     {
         Task<ICollection<Category>> GetCategory();
+        Task<int> CheckValid(Category entity);
     }
 }

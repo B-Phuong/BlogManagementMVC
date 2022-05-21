@@ -2,10 +2,10 @@
 @{
     Layout = "_LayoutAdmin";
 }
-<div></div>
+<div>New Sub Category</div>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" asp-controller="Category" enctype="multipart/form-data">
+        <form asp-action="Create" asp-controller="Category" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
            @* @if (@Model.ParentID == null)
             {
@@ -28,7 +28,7 @@
                 </div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
-                <input  asp-for="Title" class="form-control" readonly></input>
+                <input asp-for="Title" class="form-control"></input>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">

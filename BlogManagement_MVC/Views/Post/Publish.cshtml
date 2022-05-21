@@ -20,8 +20,8 @@
 
         <form asp-action="Publish">
             <input type="hidden" asp-for="Id" />
-            <input type="submit" class="btn btn-danger" /> |
-            <a asp-action="Index">Back to List</a>
+            <input type="submit" value="Publish" class="btn btn-danger" /> |
+            <input type="button" value="Cancel" onclick="location.href='@Url.Action("GetPostByUserId","Post")'" />
         </form>
     </div>
 </div>
