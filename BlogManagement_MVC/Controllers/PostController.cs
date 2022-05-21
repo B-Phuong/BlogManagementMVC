@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Slugify;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +28,7 @@ namespace BlogManagement_MVC.Controllers
         private readonly IMapper _mapper;
 
 
-        public PostController(IPostRepository postrepo, IMapper mapper, 
+        public PostController(IPostRepository postrepo, IMapper mapper,
             IPostCategoryRepository categoryRepo, ApplicationDbContext context,
             IWebHostEnvironment webHostEnvironment)
         {
@@ -41,7 +42,7 @@ namespace BlogManagement_MVC.Controllers
         public async Task<ActionResult> Index(int currentPage = 1, int pageSize = 4)
         {
             var postList = await _repo.GetPostByPaging(currentPage, pageSize); // _repo.FindAll();
-            var model = _mapper.Map<List<Post>,List<PostVM>>(postList.ToList());         
+            var model = _mapper.Map<List<Post>, List<PostVM>>(postList.ToList());
             return View(model);
         }
 
@@ -51,7 +52,7 @@ namespace BlogManagement_MVC.Controllers
             var postDetail = await _repo.FindById(id);
             ViewBag.CountComment = postDetail.PostComments.Where(p => p.Published == 1).Count();
             var model = _mapper.Map<PostVM>(postDetail);
-            
+
             return View(model);
         }
 
@@ -71,7 +72,7 @@ namespace BlogManagement_MVC.Controllers
         public ActionResult Create()
         {
             //ViewBag.CountComment =  _context.Categories.ToList().Where(c=>c.ParentID!=null).Select(c=>c.Title);
-           // ViewBag.list = new List<string> { "d", "a" };
+            // ViewBag.list = new List<string> { "d", "a" };
             ViewBag.list = new SelectList(_context.Categories.Where(c => c.ParentID != null), "Id", "Title");
             return View();
         }
@@ -83,7 +84,7 @@ namespace BlogManagement_MVC.Controllers
         public async Task<ActionResult> Create(PostVM post, List<Int64> listCategory)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
+
             try
             {
                 if (!ModelState.IsValid)
@@ -95,10 +96,12 @@ namespace BlogManagement_MVC.Controllers
                 newPost.CreatedAt = DateTime.Now;
                 newPost.Published = 1;
                 newPost.Title = post.Title;
-                var Title = post.Title.ToLower().Split(' ');
-                string slug = String.Join('-', Title);
+                //var Title = post.Title.ToLower().Split(' ');
+                //string slug = String.Join('-', Title);
+                SlugHelper helper = new SlugHelper();
+                string slug = helper.GenerateSlug(post.Title);
                 newPost.Content = post.Content;
-                newPost.Summary= post.Summary;
+                newPost.Summary = post.Summary;
                 newPost.Slug = slug;
                 newPost.MetaTitle = slug;
 
@@ -115,17 +118,17 @@ namespace BlogManagement_MVC.Controllers
                 else
                     newPost.ImageURL = "blog_3.jpg";
 
-               //IFormFile file = post.ImageFile;
-               //string folderPath = "images/";
-               //string temp = Guid.NewGuid().ToString();
-               //folderPath += temp + "_" + file.FileName;
-               //string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
-               //await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
-               //newPost.ImageURL = temp + "_" + post.ImageFile.FileName;
-               var isSuccess = _repo.Create(newPost).Result;
+                //IFormFile file = post.ImageFile;
+                //string folderPath = "images/";
+                //string temp = Guid.NewGuid().ToString();
+                //folderPath += temp + "_" + file.FileName;
+                //string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+                //await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                //newPost.ImageURL = temp + "_" + post.ImageFile.FileName;
+                var isSuccess = _repo.Create(newPost).Result;
 
-     
-                foreach(var item in listCategory)
+
+                foreach (var item in listCategory)
                 {
                     var postCategory = new PostCategory();
                     postCategory.Post = newPost;
@@ -135,8 +138,8 @@ namespace BlogManagement_MVC.Controllers
                     {
                         ModelState.AddModelError("", "Something went wrong when add category for the post");
                         ViewBag.list = new SelectList(_context.Categories.Where(c => c.ParentID != null), "Id", "Title");
-                    }    
-                }                   
+                    }
+                }
                 if (!isSuccess)
                 {
                     ModelState.AddModelError("", "Something went wrong");
@@ -155,7 +158,7 @@ namespace BlogManagement_MVC.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
+
             ViewBag.list = new SelectList(_context.Categories.Where(c => c.ParentID != null), "Id", "Title");
             var categoryList = _categoryRepo.FindCategoryByPost(id).Result.ToList();
             ViewBag.selectedList = new MultiSelectList(_context.Categories.Where(c => c.ParentID != null), "Id", "Title", categoryList.Select(c => c.Category.Id).ToList());
@@ -186,7 +189,7 @@ namespace BlogManagement_MVC.Controllers
                 updatePost.Title = post.Title;
 
                 updatePost.Content = post.Content;
-                if(post.ImageFile != null)
+                if (post.ImageFile != null)
                 {
                     IFormFile file = post.ImageFile;
                     string folderPath = "images/";
@@ -195,9 +198,9 @@ namespace BlogManagement_MVC.Controllers
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
                     await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
                     updatePost.ImageURL = temp + "_" + post.ImageFile.FileName;
-                }    
-                
- 
+                }
+
+
                 var isSuccess = await _repo.Update(updatePost);
                 if (!isSuccess)
                 {
@@ -218,7 +221,7 @@ namespace BlogManagement_MVC.Controllers
                         ViewBag.list = new SelectList(_context.Categories.Where(c => c.ParentID != null), "Id", "Title");
                     }
                 }
-                return RedirectToAction("Details", new {id=post.Id});
+                return RedirectToAction("Details", new { id = post.Id });
             }
             catch
             {
@@ -227,16 +230,19 @@ namespace BlogManagement_MVC.Controllers
         }
 
         // GET: PostController/Delete/5
-        [Authorize(Roles = "Guest")]
+        [Authorize(Roles= "Guest, Admin")]
         public async Task<ActionResult> Delete(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);          
             var postDetail = await _repo.FindById(id);
+            if (userId != postDetail.AuthorId)
+                return StatusCode(401, "You cant access to delete this post");
             var model = _mapper.Map<PostVM>(postDetail);
             return View(model);
         }
 
         // POST: PostController/Delete/5
-        [Authorize(Roles = "Guest")]
+        [Authorize(Roles = "Guest, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(PostVM post)
@@ -247,8 +253,12 @@ namespace BlogManagement_MVC.Controllers
                 var deletePost = _mapper.Map<Post>(post);
                 deletePost = postDetail;
                 var isSuccess = await _repo.Delete(deletePost);
+                var isAdmin = User.IsInRole("Admin");
                 if (isSuccess)
-                    return RedirectToAction("GetPostByUserId");
+                    if(!isAdmin)
+                        return RedirectToAction("GetPostByUserId");
+                    else
+                        return View("~/Views/Admin/Post/Index");
                 else return View(deletePost);
             }
             catch
@@ -259,7 +269,10 @@ namespace BlogManagement_MVC.Controllers
         [Authorize(Roles = "Guest")]
         public async Task<ActionResult> Private(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var postDetail = await _repo.FindById(id);
+            if (userId != postDetail.AuthorId)
+                return StatusCode(401, "You cant access to private this post");           
             var model = _mapper.Map<PostVM>(postDetail);
             return View(model);
         }
@@ -271,8 +284,8 @@ namespace BlogManagement_MVC.Controllers
         public async Task<ActionResult> Private(PostVM post)
         {
             try
-            {
-                Post postDetail = await _repo.FindById(Convert.ToInt32(post.Id));            
+            {             
+                Post postDetail = await _repo.FindById(Convert.ToInt32(post.Id));
                 var privatePost = _mapper.Map<Post>(post);
                 privatePost = postDetail;
                 var isSuccess = await _repo.Private(privatePost);
@@ -287,7 +300,10 @@ namespace BlogManagement_MVC.Controllers
         [Authorize(Roles = "Guest")]
         public async Task<ActionResult> Publish(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var postDetail = await _repo.FindById(id);
+            if (userId != postDetail.AuthorId)
+                return StatusCode(401, "You cant access to publish this post");         
             var model = _mapper.Map<PostVM>(postDetail);
             return View(model);
         }

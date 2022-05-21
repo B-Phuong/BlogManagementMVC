@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Slugify;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,31 +46,54 @@ namespace BlogManagement_MVC.Controllers
 
         // GET: CategoryController/Create
         [Authorize(Roles = "Admin")]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            
+            ViewBag.list = new SelectList(await _repo.GetCategory(), "Id", "Title");        
+            return View("../Admin/Category/Create");
         }
 
         // POST: CategoryController/Create
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(CategoryVM category, Int64 listCategory)
         {
             try
-            {
-                return RedirectToAction(nameof(Index));
+            {               
+                ViewBag.list = new SelectList(await _repo.GetCategory(), "Id", "Title");
+                var newSubCategory = _mapper.Map<Category>(category);
+                newSubCategory.Title = category.Title;
+                newSubCategory.ParentID = listCategory;
+                var isValid = _repo.CheckValid(newSubCategory).Result;
+                if (isValid > 0)
+                {
+                    ModelState.AddModelError("", "The tittle of sub category has existed!");
+                    return View("../Admin/Category/Create", category);
+                }
+                SlugHelper helper = new SlugHelper();
+                string slug = helper.GenerateSlug(category.Title);
+                newSubCategory.Content = category.Content;
+                newSubCategory.MetaTitle = slug;
+                newSubCategory.Slug = slug;
+                var isSuccess = _repo.Create(newSubCategory).Result;
+                if (!isSuccess)
+                {
+                    ModelState.AddModelError("", "Something went wrong");                 
+                    return View("../Admin/Category/Create", category);
+                }           
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("../Admin/Category/Create");
             }
         }
         [Authorize(Roles = "Admin")]
         // GET: CategoryController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-          
+            
             var categoryDetail = await _repo.FindById(id);
             ViewBag.list = new SelectList(await _repo.GetCategory(), "Id", "Title", categoryDetail.ParentID);
 
@@ -82,28 +106,41 @@ namespace BlogManagement_MVC.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(CategoryVM category)
+        public async Task<ActionResult> Edit(CategoryVM category, Int64 listCategory)
         {
             try
             {
                 Category categoryDetail = await _repo.FindById(Convert.ToInt32(category.Id));
+                var oldTitle = categoryDetail.Title;
+                ViewBag.list = new SelectList(await _repo.GetCategory(), "Id", "Title", categoryDetail.ParentID);
                 var updateCategory = _mapper.Map<Category>(category);
                 updateCategory = categoryDetail;
+                //updateCategory.Title = category.Title;
+                updateCategory.ParentID = listCategory;
+                //var isValid = _repo.CheckValid(updateCategory).Result;
+                //if (isValid > 0) && updateCategory.Title != oldTitle)
+                //{
+                //    ModelState.AddModelError("", "The tittle of sub category has existed!");
+                //    return View("../Admin/Category/Edit");
+                //}
+                //SlugHelper helper = new SlugHelper();
+                //string slug = helper.GenerateSlug(category.Title);
                 updateCategory.Content = category.Content;
-                updateCategory.Title = category.Title;
-                updateCategory.ParentID= category.ParentID;
               
+                //updateCategory.MetaTitle = slug;
+                //updateCategory.Slug = slug;
+               
                 var isSuccess = await _repo.Update(updateCategory);
                 if (!isSuccess)
                 {
                     ModelState.AddModelError("", "Something Went Wrong...");
-                    return View(category);
+                    return View("../Admin/Category/Edit", category);
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View("../Admin/Category/Edit");
             }
         }
 

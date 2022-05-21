@@ -33,7 +33,9 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Delete Record" class="btn btn-danger" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            
+            <input type="button" value="Cancel" onclick="location.href='@Url.Action("Index","Home")'" class="btn btn-info"/>
          
         </form>
     </div>

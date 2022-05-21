@@ -14,9 +14,17 @@ namespace BlogManagement_MVC.Repository
         {
             _db = db;
         }
-        public Task<bool> Create(Category entity)
+        public async Task<bool> Create(Category entity)
+        {           
+            await _db.Categories.AddAsync(entity);
+            return await Save();
+        }
+
+        public async Task<int> CheckValid(Category entity)
         {
-            throw new System.NotImplementedException();
+            var sameSubCategory = await _db.Categories.Where(c => c.Title.ToLower() == entity.Title.ToLower())
+                                                      .ToListAsync(); //
+            return sameSubCategory.Count;
         }
 
         public Task<bool> Delete(Category entity)
