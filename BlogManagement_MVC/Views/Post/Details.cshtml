@@ -68,25 +68,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 <!---//End-header---->
 <!---start-content---->
-<div class="top-searchbar">
+@*<div class="top-searchbar">
     <form>
         <input type="text" /><input type="submit" value="" />
     </form>
-</div>
+</div>*@
 <div class="content">
     <!--class="content"-->
     <div class="wrap">
         <!--class="wrap"-->
-        <div class="single-page">
+        <div style="margin-top: 0px" class="single-page">
             <!--class="single-page"-->
             <div>
                 <!--class="single-page-artical"-->
                 <div>
                     <!--class="artical-content"-->
-                    <h1><b>@Model.Title</b></h1>
-                    <img src="~/images/@Model.ImageURL" title="banner1">
+                    <h1 style="font-size: 50px"><b>@Model.Title</b></h1>
+                    <div style=" width: 70%; margin: auto;">
+                        <img style="display: block; height: auto; width: 100%; height: auto; margin: auto; border-radius: 20px; box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px " src="~/images/@Model.ImageURL" title="Hình Blog">
+                    </div>
                     
-                    <p>@Html.Raw(@Model.Content)</p>  <!--System.Web.HttpUtility.HtmlDecode(Model.Content)-->
+                    <div style="font-family:  Times New Roman, Times, serif; width: 100%">
+                        @Html.Raw(@Model.Content)
+                    </div>
+                   
                     <div class="artical-links">
                         <ul>
                             <li><img src="~/images/blog-icon2.png" title="Admin"><span>@Model.Author.FirstName @Model.Author.LastName</span></li>
