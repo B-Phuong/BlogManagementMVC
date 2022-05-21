@@ -4944,13 +4944,16 @@ input[type="button"].btn-block {
     border-radius: 0.25rem;
 }
 
+.page-color {
+    color: #44d7b6;
+}
+
 .page-link {
     position: relative;
     display: block;
     padding: 0.5rem 0.75rem;
     margin-left: -1px;
     line-height: 1.25;
-    color: #007bff;
     background-color: #fff;
     border: 1px solid #dee2e6;
 }
@@ -4983,8 +4986,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #44d7b6;
+    border-color: #44d7b6;
 }
 
 .page-item.disabled .page-link {
@@ -11571,7 +11574,6 @@ html {
     }
 
 .blog-sidebar .subscribe-form .btn-subscribe {
-    background-color: rgba(0, 145, 255, 0.66);
     color: #ffffff;
     font-weight: 400;
     padding-top: 13px;
