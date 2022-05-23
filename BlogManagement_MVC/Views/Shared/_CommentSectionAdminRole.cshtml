@@ -32,17 +32,17 @@
                         <h3 class="style">@item.CreatedAt</h3>
                         <p class="para top">
                             @item.Content
-                        @* <i class="" controler="PostComment" action="HiddenComment"></i>*@
-                        @if (@item.Published == 1)
-                        {
-                            <a data-id="@item.Id" data-toggle="modal" data-target="#hiddenCommentModal" class="open-AddDialog btn fa fa-times text-danger text-active" asp-route-id="@item.Id">
-                                <i aria-hidden="true"></i>
-                            </a>
-                        }
-                        else
-                        {
-                            <a style="color:blue"> Đã ẩn comment</a>
-                        }
+                            @* <i class="" controler="PostComment" action="HiddenComment"></i>*@
+                            @if (@item.Published == 1)
+                            {
+                                <a data-id="@item.Id" data-toggle="modal" data-target="#hiddenCommentModal" class="open-AddDialog btn fa fa-times text-danger text-active" asp-route-id="@item.Id">
+                                    <i aria-hidden="true"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a style="color:blue"> Đã ẩn comment</a>
+                            }
                         </p>
                         <a aria-expanded="false" data-toggle="collapse" class="btn1" href="@($"#replyComment{item.Id}")">Click to Reply</a>
                     </div>
@@ -89,20 +89,23 @@
                                 <h3 class="style">@subComment.CreatedAt</h3>
                                 <p class="para top">
                                     @subComment.Content
-                                
-                                @if (@item.Published == 1)
-                                {
-                                    <a class="fa fa-times text-danger text-active" asp-route-id="@item.Id">
-                                        <i aria-hidden="true"></i>
-                                    </a>
-                                }
-                                else
-                                {
-                                    @*<a class="fa fa-check text-success text-active" asp-route-id="@item.Id">
-                                        <i aria-hidden="true"></i>
-                                        </a>*@
-                                    <a style="color:blue"> Đã ẩn comment</a>
-                                }
+
+                                    @if (@subComment.Published == 1)
+                                    {
+                                        <a data-id="@subComment.Id" data-toggle="modal" data-target="#hiddenCommentModal" class="open-AddDialog btn fa fa-times text-danger text-active" asp-route-id="@subComment.Id">
+                                            <i aria-hidden="true"></i>
+                                        </a>
+                                        @*<a class="fa fa-times text-danger text-active" asp-route-id="@item.Id">
+                                            <i aria-hidden="true"></i>
+                                            </a>*@
+                                    }
+                                    else
+                                    {
+                                        @*<a class="fa fa-check text-success text-active" asp-route-id="@item.Id">
+                                            <i aria-hidden="true"></i>
+                                            </a>*@
+                                        <a style="color:blue"> Đã ẩn comment</a>
+                                    }
                                 </p>
 
                                 <a aria-expanded="false" data-toggle="collapse" class="btn1" href="@($"#replySubComment{subComment.Id}")">Click to Reply</a>
@@ -134,7 +137,7 @@
             }
 
         }
-     
+
         <div class="artical-commentbox">
             <h2>Leave a Comment</h2>
             <div class="table-form">
@@ -156,12 +159,12 @@
                 }
                 else
                 {
-                      <a class="reply-btn btn" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Post/Details/@ViewBag.PostId">Login to reply</a>
+                    <a class="reply-btn btn" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Post/Details/@ViewBag.PostId">Login to reply</a>
 
-                   @* <div>
+                    @* <div>
                         <label>Please log in before comment in this post</label>
 
-                    </div>*@
+                        </div>*@
                 }
 
             </div>
@@ -199,8 +202,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <input type="submit" class="btn btn-primary"></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="submit" value="Hidden" class="btn btn-primary"></button>
                 </div>
             </form>
         </div>
