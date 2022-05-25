@@ -14,12 +14,15 @@ namespace BlogManagement_MVC.Controllers
     public class PostCategoryController : Controller
     {
         private readonly IPostCategoryRepository _repo;
+        private readonly ICategoryRepository _cateRepo;
         private readonly IMapper _mapper;
 
-        public PostCategoryController(IPostCategoryRepository postCategoryrepo)
+        public PostCategoryController(IPostCategoryRepository repo, ICategoryRepository cateRepo)
         {
-            _repo = postCategoryrepo;
-          
+            _repo = repo;
+            _cateRepo = cateRepo;
+
+
         }
         // GET: PostCategoryController
        
@@ -36,11 +39,13 @@ namespace BlogManagement_MVC.Controllers
         // GET: PostCategoryController/PostsByCategory/5
         [Route("Category/{id:int}/{currentPage:int}")]
         [Route("Category/{id:int}")]
-        public async Task<ActionResult> PostsByCategory(int id,int currentPage = 1, int pageSize = 6)
+        public async Task<ActionResult> PostsByCategory(int id, int currentPage = 1, int pageSize = 6)
         {
-            //var posts = _repo.FindAll();
-            var postList = await _repo.GetPostCategoryByPaging(currentPage, pageSize); // _repo.FindAll();
-            var posts = await _repo.FindByCategory(id);
+            var category = await _cateRepo.FindById(id);
+            //var postList = await _repo.GetPostCategoryByPaging(currentPage, pageSize); // _repo.FindAll();
+
+            var posts = await _repo.GetPostByCategoryAfterPaging(id, currentPage);// _repo.FindByCategory(id);
+           
             if (posts.Count() % pageSize == 0)
             {
                 ViewBag.ToTalPage = posts.Count() / pageSize;
@@ -52,9 +57,9 @@ namespace BlogManagement_MVC.Controllers
             ViewBag.CurrentPage = 1;
             ViewBag.ReturnURL = $"/Category/{id}";
            
-            ViewBag.CategoryTitle = posts.Select(p => p.Category.Title).FirstOrDefault();
+            ViewBag.CategoryTitle = category.Title;
             //var model = _mapper.Map<List<Post>, List<PostCategory>>(posts.ToList());
-            return View(postList);
+            return View(posts);
         }
 
         // GET: PostCategoryController/Create

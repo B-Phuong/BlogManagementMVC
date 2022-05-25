@@ -34,7 +34,7 @@ namespace BlogManagement_MVC.Repository
 
         public async Task<ICollection<Category>> FindAll()
         {
-            var listCategories = await _db.Categories.Include(c=>c.CategoryParent)
+            var listCategories = await _db.Categories.Include(c => c.CategoryParent)
                                                      .ToListAsync(); //
             return listCategories;
         }
@@ -48,7 +48,7 @@ namespace BlogManagement_MVC.Repository
 
         public async Task<Category> FindById(int id)
         {
-            var listCategories = await _db.Categories.Where(p=>p.Id==id)
+            var listCategories = await _db.Categories.Where(p => p.Id == id)
                                                      .FirstOrDefaultAsync(); //
             return listCategories;
         }

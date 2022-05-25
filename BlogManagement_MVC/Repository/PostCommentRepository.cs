@@ -55,13 +55,18 @@ namespace BlogManagement_MVC.Repository
         public async Task<bool> HiddenComment(PostComment entity)
         {
             entity.Published = 0;
-            var listSubComment = await _db.PostComments.Where(pc => pc.ParentID == entity.Id)
-                                                       .ToListAsync();
-            foreach(var item in listSubComment)
+            if (entity.ParentID == null)
             {
-                item.Published = 0;
-                _db.PostComments.Update(item);
-            }          
+                
+                var listSubComment = await _db.PostComments.Where(pc => pc.ParentID == entity.Id)
+                                                           .ToListAsync();
+                foreach (var item in listSubComment)
+                {
+                    item.Published = 0;
+                    _db.PostComments.Update(item);
+                }
+            }
+            
            _db.PostComments.Update(entity);
             return await Save();
         }

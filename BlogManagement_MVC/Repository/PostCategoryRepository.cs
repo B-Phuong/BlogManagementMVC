@@ -59,6 +59,18 @@ namespace BlogManagement_MVC.Repository
             return posts;
         }
 
+        public async Task<ICollection<PostCategory>> GetPostByCategoryAfterPaging(int id, int currentPage, int pageSize = 4)
+        {
+            var posts = await _db.PostCategories.Include(pc => pc.Post)
+                                                .Include(p => p.Category)
+                                                .Where(pc => pc.Post.Published == 1 && pc.Post.IsDeleted == false && pc.CategoryId == id)
+                                                .OrderBy(p => p.Post.CreatedAt)
+                                                .Skip((currentPage - 1) * pageSize)
+                                                .Take(pageSize)
+                                                .ToListAsync();
+            return posts;
+        }
+
         public async Task<PostCategory> FindById(int id)
         {
             throw new System.NotImplementedException();
