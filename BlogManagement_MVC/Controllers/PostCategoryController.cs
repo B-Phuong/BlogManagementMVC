@@ -25,16 +25,17 @@ namespace BlogManagement_MVC.Controllers
 
         }
         // GET: PostCategoryController
-       
+
         public async Task<ActionResult> Index()
         {
             var posts = await _repo.FindAll();
-       
+
             if (User.IsInRole("Admin"))
                 return View("../Admin/Post/Index", posts);
             //var model = _mapper.Map<List<Post>, List<PostCategory>>(posts.ToList());
             return View(posts);
         }
+
 
         // GET: PostCategoryController/PostsByCategory/5
         [Route("Category/{id:int}/{currentPage:int}")]

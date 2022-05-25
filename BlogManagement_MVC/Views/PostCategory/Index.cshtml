@@ -12,7 +12,7 @@
                     @foreach (var item in Model)
                     {
                         <article class="media blog-post wow fadeInUp">
-                            <img src="~/images/blog_1.jpg" alt="blog post" class="blog-post-thumbnail">
+                            <img src="~/images/@item.Post.ImageURL" alt="blog post" style="border-radius: 50%; width:150px; height:150px" class="blog-post-thumbnail">
                             <div class="media-body">
                                 <h5 class="blog-post-title">@item.Post.Title</h5>
                                 <p class="blog-post-excerpt">@item.Post.Summary</p>
