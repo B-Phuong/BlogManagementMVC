@@ -11,7 +11,7 @@
 
 <div class="comment-section">
     <div class="grids_of_2">
-        <h2 style="color:#44d7b6">Comments</h2>
+        <h2 style="color:#44d7b6; font-size: 40px"><b>Comments</b></h2>
         @foreach (var item in Model)
         {
             foreach (var commentList in @ViewBag.AuthorCommentList)
@@ -23,9 +23,9 @@
             }
             if (@item.ParentID == null)  // get comment
             {
-                <div class="grid1_of_2">
-                    <div class="grid_img">
-                        <a href=""><img src="~/images/@imageURL" width="60px" alt=""></a>
+                <div  class="grid1_of_2">
+                    <div style="width: 50px; height: 50px" class="grid_img">
+                        <a href=""><img style="width: 50px; height: 50px; border-radius: 50%" src="~/images/@imageURL" width="60px" alt=""></a>
                     </div>
                     <div class="grid_text">
                         <h4 class="style1 list"><a href="#">@item.AuthorComment.FirstName @item.AuthorComment.LastName</a></h4>
@@ -53,14 +53,14 @@
 
                                     <div>
 
-                                        <label>Title Comment</label>
-                                        <span><input name="Title" /></span>
+                                        <label style="display: table-footer-group">Title Comment</label>
+                                        <span><input name="Title" class="form-control"/></span>
                                         <label>Your Comment<span>*</span></label>
                                         <input name="ParentID" value="@item.Id" readonly hidden />
                                         <input name="PostId" value="@ViewBag.PostId" readonly hidden />
-                                        <textarea name="Content"> </textarea>
+                                        <textarea name="Content" style="width: 100%"> </textarea>
                                     </div>
-                                    <input type="submit" value="submit">
+                                    <button class="btn btn-primary" type="submit" value="submit">submit</button>
                                 </form>
                             </div>
                         </div>
@@ -78,9 +78,9 @@
                     }
                     @if (subComment.ParentID == item.Id)  //get subcomment
                     {
-                        <div class="grid1_of_2 left">
-                            <div class="grid_img">
-                                <a href=""><img src="~/images/@imageURL" width="60px" alt=""></a>
+                        <div  class="grid1_of_2 left">
+                            <div style="width: 50px; height: 50px" class="grid_img">
+                                <a href=""><img style="width: 50px; height: 50px; border-radius: 50%" src="~/images/@imageURL" alt=""></a>
                             </div>
                             <div class="grid_text">
                                 <h4 class="style1 list"><a href="#">@subComment.AuthorComment.FirstName @subComment.AuthorComment.LastName</a></h4>
@@ -103,14 +103,14 @@
                                         <form class="collapse" method="post" asp-controller="PostComment" asp-action="Create" id="@($"replySubComment{subComment.Id}")">
 
                                             <div>
-                                                <label>Title Comment</label>
-                                                <span><input name="Title" /></span>
+                                                <label style="display: table-footer-group">Title Comment</label>
+                                                <span><input name="Title" class="form-control"/></span>
                                                 <label>Your Comment<span>*</span></label>
-                                                <input name="ParentID" value="@item.Id" readonly hidden /> @*  @subComment.Id--> *@ 
+                                                <input name="ParentID" value="@item.Id" readonly hidden />
                                                 <input name="PostId" value="@ViewBag.PostId" readonly hidden />
-                                                <textarea name="Content"> </textarea>
+                                                <textarea name="Content" style="width: 100%"> </textarea>
                                             </div>
-                                            <input type="submit" value="submit">
+                                            <button class="btn btn-primary" type="submit" value="submit">submit</button>
                                         </form>
                                     </div>
                                 </div>
@@ -133,18 +133,18 @@
 
                         <div>
                             <label>Title Comment</label>
-                            <span><input name="Title" /></span>
+                            <span><input name="Title" class="form-control" /></span>
                             <label>Your Comment<span>*</span></label>
                             <input name="ParentID" value="@null" readonly hidden />
                             <input name="PostId" value="@ViewBag.PostId" readonly hidden />
-                            <textarea name="Content"> </textarea>
+                            <textarea name="Content" style="width: 100%"> </textarea>
                         </div>
-                        <input type="submit" value="submit">
+                        <button class="btn btn-primary" type="submit" value="submit">submit</button>
                     </form>
                 }
                 else
                 {
-                      <a class="reply-btn btn" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Post/Details/@ViewBag.PostId">Login to reply</a>
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Post/Details/@ViewBag.PostId">Login to reply</a>
 @*
                     <div>
                         <label>Please log in before comment in this post</label>
