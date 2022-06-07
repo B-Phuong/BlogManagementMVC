@@ -235,7 +235,7 @@ namespace BlogManagement_MVC.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);          
             var postDetail = await _repo.FindById(id);
-            if (userId != postDetail.AuthorId)
+            if (userId != postDetail.AuthorId && !User.IsInRole("Admin"))
                 return StatusCode(401, "You cant access to delete this post");
             var model = _mapper.Map<PostVM>(postDetail);
             return View(model);
