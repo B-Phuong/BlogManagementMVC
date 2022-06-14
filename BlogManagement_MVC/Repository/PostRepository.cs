@@ -49,6 +49,15 @@ namespace BlogManagement_MVC.Repository
             return posts;
         }
 
+        public async Task<ICollection<Post>> FindPosts()
+        {
+            var posts = await _db.Posts.Include(p => p.Author)
+                                       .Where(p=>p.IsDeleted == false)
+                                       .ToListAsync();
+            return posts;
+        }
+
+
         public async Task<ICollection<Post>> GetPostByPaging(int currentPage, int pageSize = 4)
         {
             var posts = await _db.Posts.Include(p => p.Author)

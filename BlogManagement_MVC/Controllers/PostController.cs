@@ -59,7 +59,7 @@ namespace BlogManagement_MVC.Controllers
         public async Task<ActionResult> GetPostByUserId()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var postDetail = await _repo.FindAll();
+            var postDetail = await _repo.FindPosts();
             postDetail = postDetail.Where(p => p.AuthorId == userId).ToList();
             var model = _mapper.Map<List<Post>, List<PostVM>>(postDetail.ToList());
 
